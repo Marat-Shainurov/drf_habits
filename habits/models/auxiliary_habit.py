@@ -9,7 +9,7 @@ class AuxiliaryHabit(models.Model):
                                    on_delete=models.SET_NULL, **NULLABLE)
     name = models.CharField(verbose_name='auxiliary_habit_name', max_length=50, unique=True)
     action = models.TextField(verbose_name='auxiliary_action_description', **NULLABLE)
-    action_time = models.DateTimeField(verbose_name='auxiliary_action_time', **NULLABLE)
+    action_time = models.TimeField(verbose_name='auxiliary_action_time', **NULLABLE)
     action_place = models.CharField(verbose_name='auxiliary_action_place', max_length=50, **NULLABLE)
     duration = models.DurationField(verbose_name='auxiliary_habit_duration', **NULLABLE)
     is_public = models.BooleanField(default=False, verbose_name='is_auxiliary_habit_public')

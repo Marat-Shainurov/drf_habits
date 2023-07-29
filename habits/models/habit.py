@@ -14,9 +14,9 @@ class Habit(models.Model):
 
     name = models.CharField(verbose_name='habit_name', unique=True, max_length=50)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user', on_delete=models.SET_NULL,
-                             related_name='user', **NULLABLE)
+                             related_name='user_habits', **NULLABLE)
     action = models.TextField(verbose_name='action_description', **NULLABLE)
-    action_time = models.DateTimeField(verbose_name='action_time')
+    action_time = models.TimeField(verbose_name='action_time')
     action_place = models.CharField(verbose_name='action_place', max_length=50)
     duration = models.DurationField(verbose_name='habit_duration')
     regularity = models.CharField(verbose_name='habit_regularity', choices=REGULARITY_CHOICES, default='daily',

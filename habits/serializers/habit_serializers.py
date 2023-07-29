@@ -3,6 +3,7 @@ from rest_framework.fields import SerializerMethodField
 
 from habits.models import Habit, AuxiliaryHabit, Reward
 from habits.serializers import AuxiliaryHabitShortSerializer, RewardShortSerializer
+from habits.validators import IsTooLong
 
 
 class HabitSerializer(serializers.ModelSerializer):
@@ -15,6 +16,8 @@ class HabitSerializer(serializers.ModelSerializer):
         model = Habit
         fields = ('id', 'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',
                   'has_auxiliary_habits', 'auxiliary_habit', 'has_reward', 'habit_reward',)
+        validators = [IsTooLong(field='duration')]
+
 
     def get_has_auxiliary_habits(self, habit):
         if AuxiliaryHabit.objects.filter(main_habit=habit).exists():

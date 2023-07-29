@@ -7,10 +7,17 @@ from habits.validators import HasReward
 class AuxiliaryHabitSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuxiliaryHabit
-        fields = ('main_habit', 'name', 'action', 'action_time', 'action_place', 'duration', 'is_public')
+        fields = ('id', 'main_habit', 'name', 'action', 'action_time', 'action_place', 'duration', 'is_public')
+
 
 class AuxiliaryHabitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuxiliaryHabit
         fields = '__all__'
         validators = [HasReward(field='main_habit')]
+
+
+class AuxiliaryHabitShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuxiliaryHabit
+        fields = ('name', 'action',)

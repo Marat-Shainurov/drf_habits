@@ -15,3 +15,9 @@ class RewardCreateSerializer(serializers.ModelSerializer):
         model = Reward
         fields = '__all__'
         validators = [HasAuxiliaryHabit(field='main_habit')]
+
+class RewardShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reward
+        fields = ('id', 'name',)
+

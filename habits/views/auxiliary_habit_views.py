@@ -14,6 +14,11 @@ class AuxiliaryHabitListAPIView(generics.ListAPIView):
     serializer_class = AuxiliaryHabitSerializer
 
 
+class AuxiliaryHabitRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = AuxiliaryHabit.objects.all()
+    serializer_class = AuxiliaryHabitSerializer
+
+
 class AuxiliaryHabitUpdateAPIView(generics.UpdateAPIView):
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitSerializer

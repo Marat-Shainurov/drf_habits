@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from users.models import CustomUser
-from users.serializers import CustomUserSerializer
+from users.serializers import CustomUserSerializer, CustomUserDetailSerializer
 
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
@@ -10,6 +10,11 @@ class CustomUserCreateAPIView(generics.CreateAPIView):
 
 class CustomUserListAPIView(generics.ListAPIView):
     serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
+
+
+class CustomUserRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = CustomUserDetailSerializer
     queryset = CustomUser.objects.all()
 
 

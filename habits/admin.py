@@ -5,14 +5,14 @@ from habits.models import Habit, AuxiliaryHabit, Reward
 
 @admin.register(Habit)
 class HabitAdmin(admin.ModelAdmin):
-    list_display = ('name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',)
+    list_display = ('pk', 'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',)
 
 
 @admin.register(AuxiliaryHabit)
 class AuxiliaryHabitAdmin(admin.ModelAdmin):
-    list_display = ('main_habit', 'name', 'action', 'action_time', 'action_place', 'duration', 'is_public',)
+    list_display = ('pk', 'main_habit', 'name', 'action', 'action_time', 'action_place', 'duration', 'is_public',)
 
 
 @admin.register(Reward)
 class RewardHabitAdmin(admin.ModelAdmin):
-    list_display = ('main_habit', 'name', 'description', 'resources',)
+    list_display = ('pk', 'main_habit', 'name', 'description', 'resources',)

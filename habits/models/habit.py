@@ -22,8 +22,6 @@ class Habit(models.Model):
     regularity = models.CharField(verbose_name='habit_regularity', choices=REGULARITY_CHOICES, default='daily',
                                   max_length=13)
     is_public = models.BooleanField(default=False, verbose_name='is_habit_public')
-    has_auxiliary_habits = models.BooleanField(verbose_name='has_auxiliary_habits', default=False)
-
 
     def __str__(self):
         return f'{self.name}'

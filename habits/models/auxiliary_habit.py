@@ -5,7 +5,7 @@ from users.models import NULLABLE
 
 
 class AuxiliaryHabit(models.Model):
-    main_habit = models.ForeignKey(Habit, verbose_name='main_habit', related_name='main_habit',
+    main_habit = models.ForeignKey(Habit, verbose_name='main_habit', related_name='auxiliary_habit',
                                    on_delete=models.SET_NULL, **NULLABLE)
     name = models.CharField(verbose_name='auxiliary_habit_name', max_length=50, unique=True)
     action = models.TextField(verbose_name='auxiliary_action_description', **NULLABLE)

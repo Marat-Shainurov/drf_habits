@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 
 from habits.models import Reward
 from habits.serializers import RewardSerializer

@@ -7,7 +7,8 @@ class HasReward:
         self.field = field
 
     def __call__(self, value):
-        if value.habit_reward.all().exists():
+        tmp_val = dict(value).get(self.field)
+        if tmp_val.habit_reward.all():
             raise ValidationError(
                 'This habit already has a reward! You can assign either a reward or an auxiliary habit.')
 
@@ -17,6 +18,7 @@ class HasAuxiliaryHabit:
         self.field = field
 
     def __call__(self, value):
-        if value.auxiliary_habit.all().exists():
+        tmp_val = dict(value).get(self.field)
+        if tmp_val.auxiliary_habit.all():
             raise ValidationError(
                 'This habit already has a linked auxiliary habit! You can assign either a reward or an auxiliary habit')

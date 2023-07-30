@@ -1,7 +1,7 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from habits.models import Reward
-from habits.validators import HasAuxiliaryHabit
 
 
 class RewardSerializer(serializers.ModelSerializer):
@@ -14,10 +14,16 @@ class RewardCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
         fields = '__all__'
-        validators = [HasAuxiliaryHabit(field='main_habit')]
+
+    def create(self, validated_data):
+        habit = validated_data.get('main_habit')
+        if habit.auxiliary_habit.all().exists():
+            raise ValidationError({
+                "result": 'This habit already has an auxiliary habit! You can assign either a reward or an auxiliary habit'})
+        return super().create(validated_data)
+
 
 class RewardShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
         fields = ('id', 'name',)
-

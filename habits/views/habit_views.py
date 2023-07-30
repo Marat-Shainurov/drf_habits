@@ -5,11 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from habits.models import Habit
 from habits.paginators import HabitListPagination
 from habits.permissions import IsOwner
-from habits.serializers import HabitSerializer
+from habits.serializers import HabitSerializer, HabitCreateSerializer
 
 
 class HabitCreateAPIView(generics.CreateAPIView):
-    serializer_class = HabitSerializer
+    serializer_class = HabitCreateSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):

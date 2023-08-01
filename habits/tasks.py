@@ -20,13 +20,10 @@ def getUpdate_bot():
 @shared_task
 def send_daily_reminders():
     users = CustomUser.objects.filter(is_active=True, chat_id__isnull=False)
-    informed = []
+    logger.info(f'users - {users}')
 
     if users:
         for user in users:
             chat_id = user.chat_id
             send_habits_reminder(chat_id)
-            informed.append(user.telegram)
-
-    logger.info(f'{len(informed)} users have been informed')
-    logger.info(f'Informed users: {informed}')
+            logger.info(f'{user.telegram} ({user.chat_id}) has been informed')

@@ -3,11 +3,11 @@ from rest_framework.permissions import IsAuthenticated
 
 from users.models import CustomUser
 from users.permissions import IsStaffOrSuperuser
-from users.serializers import CustomUserSerializer, CustomUserDetailSerializer
+from users.serializers import CustomUserSerializer, CustomUserDetailSerializer, CustomUserCreateSerializer
 
 
 class CustomUserCreateAPIView(generics.CreateAPIView):
-    serializer_class = CustomUserSerializer
+    serializer_class = CustomUserCreateSerializer
     permission_classes = [IsAuthenticated, IsStaffOrSuperuser]
 
 

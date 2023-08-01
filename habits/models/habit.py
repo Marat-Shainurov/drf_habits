@@ -1,28 +1,25 @@
 from django.conf import settings
 from django.db import models
+from multiselectfield import MultiSelectField
+from rest_framework.exceptions import ValidationError
 
 from users.models import NULLABLE
 
 
 class Habit(models.Model):
-
     REGULARITY_CHOICES = [
         ('daily', 'Daily'),
-        ('twice_a_week_MT', 'Twice a week (Mon + Thu)'),
-        ('twice_a_week_TF', 'Twice a week (Tue + Fri)'),
-        ('twice_a_week_WS', 'Twice a week (Wed + Sat)'),
-        ('three_times_a_week_MWF', 'Three times a week (Mon + Wed + Fri)'),
-        ('three_times_a_week_TTS', 'Three times a week (Tue + Thu + Sat)'),
-        ('three_times_a_week_WFS', 'Three times a week (Wed + Fri + Sun)'),
-        ('on_weekdays', 'From Monday to Friday'),
-        ('on_weekends', 'From Saturday to Sunday'),
-        ('each_mon', "Every Monday"),
-        ('each_tue', "Every Tuesday"),
-        ('each_wed', "Every Wednesday"),
-        ('each_thu', "Every Thursday"),
-        ('each_fri', "Every Friday"),
-        ('each_sat', "Every Saturday"),
-        ('each_sun', "Every Sunday"),
+        ('weekly', 'Weekly'),
+    ]
+
+    DAYS_CHOICES = [
+        ('mon', "Every Monday"),
+        ('tue', "Every Tuesday"),
+        ('wed', "Every Wednesday"),
+        ('thu', "Every Thursday"),
+        ('fri', "Every Friday"),
+        ('sat', "Every Saturday"),
+        ('sun', "Every Sunday"),
     ]
 
     name = models.CharField(verbose_name='habit_name', unique=True, max_length=50)
@@ -33,7 +30,9 @@ class Habit(models.Model):
     action_place = models.CharField(verbose_name='action_place', max_length=50)
     duration = models.DurationField(verbose_name='habit_duration')
     regularity = models.CharField(verbose_name='habit_regularity', choices=REGULARITY_CHOICES, default='daily',
-                                  max_length=23)
+                                  max_length=7)
+    days_of_week = MultiSelectField(choices=DAYS_CHOICES, **NULLABLE, verbose_name='days_of_week', max_choices=7,
+                                    max_length=23)
     is_public = models.BooleanField(default=False, verbose_name='is_habit_public')
 
     def __str__(self):
@@ -42,3 +41,14 @@ class Habit(models.Model):
     class Meta:
         verbose_name = 'Main habit'
         verbose_name_plural = 'Main habits'
+
+    def save(self, *args, **kwargs):
+        if self.regularity == 'daily' and self.days_of_week:
+            raise ValidationError(
+                "You have to select 'Weekly' as the regularity mode if you want to specify days of the week!"
+            )
+        elif self.regularity == 'weekly' and not self.days_of_week:
+            raise ValidationError(
+                "You have to specify days of the week for the 'Weekly' regularity mode!"
+            )
+        super().save(*args, **kwargs)

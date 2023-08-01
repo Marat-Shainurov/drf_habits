@@ -13,13 +13,13 @@ class Habit(models.Model):
     ]
 
     DAYS_CHOICES = [
-        ('mon', "Every Monday"),
-        ('tue', "Every Tuesday"),
-        ('wed', "Every Wednesday"),
-        ('thu', "Every Thursday"),
-        ('fri', "Every Friday"),
-        ('sat', "Every Saturday"),
-        ('sun', "Every Sunday"),
+        ('1', "Every Monday"),
+        ('2', "Every Tuesday"),
+        ('3', "Every Wednesday"),
+        ('4', "Every Thursday"),
+        ('5', "Every Friday"),
+        ('6', "Every Saturday"),
+        ('7', "Every Sunday"),
     ]
 
     name = models.CharField(verbose_name='habit_name', unique=True, max_length=50)

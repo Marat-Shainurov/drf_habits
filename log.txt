@@ -1,10 +1,5 @@
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Status Code: 200, Response Text: {"ok":true,"result":{"message_id":4,"from":{"id":6424199571,"is_bot":true,"first_name":"HabitBot","username":"ms_habits_bot"},"chat":{"id":364672252,"first_name":"Marat","username":"mshaynurov","type":"private"},"date":1690800050,"text":"hello"}}
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-id: None
-Status Code: 400, Response Text: {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Status Code: 200, Response Text: {"ok":true,"result":{"message_id":10,"from":{"id":6424199571,"is_bot":true,"first_name":"HabitBot","username":"ms_habits_bot"},"chat":{"id":364672252,"first_name":"Marat","username":"mshaynurov","type":"private"},"date":1690813662,"text":"Hello and welcome!"}}
-2023-07-30 15:46:03,193 - habits.services - INFO - Status Code: 200, Response Text: {"ok":true,"result":{"message_id":11,"from":{"id":6424199571,"is_bot":true,"first_name":"HabitBot","username":"ms_habits_bot"},"chat":{"id":364672252,"first_name":"Marat","username":"mshaynurov","type":"private"},"date":1690815669,"text":"Hello, dear 364672252!Here is a friendly reminder about your tomorrow's activities:Activities -\n-\n-\n-"}}
+2023-08-01 13:14:16,181 - habits.services - INFO - Joined user: @mshaynurov, Status Code: 200, Response Text: {"ok":true,"result":{"message_id":32,"from":{"id":6424199571,"is_bot":true,"first_name":"HabitBot","username":"ms_habits_bot"},"chat":{"id":364672252,"first_name":"Marat","username":"mshaynurov","type":"private"},"date":1690884856,"text":"@mshaynurov, \nHello and welcome!\nNow the work on your good good habits would be even more effective!\nWe will send you daily friendly reminders about your next day activities.\nGood luck!","entities":[{"offset":0,"length":11,"type":"mention"}]}}
+2023-08-01 13:14:16,184 - habits.services - INFO - New user @mshaynurov with chat_id 364672252 is added to the chat bot and greeted
+2023-08-01 13:18:00,359 - habits.services - INFO - Status Code: 200, Response Text: {"ok":true,"result":{"message_id":33,"from":{"id":6424199571,"is_bot":true,"first_name":"HabitBot","username":"ms_habits_bot"},"chat":{"id":364672252,"first_name":"Marat","username":"mshaynurov","type":"private"},"date":1690885080,"text":"Hello, dear @mshaynurov!Here is a friendly reminder about your tomorrow's activities:Activities outputted by a function!","entities":[{"offset":12,"length":11,"type":"mention"}]}}
+2023-08-01 13:18:00,361 - habits.services - INFO - 1 users have been informed
+2023-08-01 13:18:00,362 - habits.services - INFO - Informed users: ['@mshaynurov']

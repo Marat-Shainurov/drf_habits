@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -116,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
@@ -153,3 +155,14 @@ CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 TELEGRAM_API_TOKEN = os.getenv('TELEGRAM_API_TOKEN')
+
+CELERY_BEAT_SCHEDULE = {
+    'getUpdate HabitBot': {
+        'task': 'habits.tasks.getUpdate_bot',
+        'schedule': timedelta(seconds=5),
+    },
+    'Send reminders': {
+        'task': 'habits.tasks.send_daily_reminders',
+        'schedule': crontab(hour='19', minute='0'),
+    },
+}

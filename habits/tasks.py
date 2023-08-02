@@ -21,6 +21,7 @@ def getUpdate_bot():
                 send_greetings(chat_id)
                 logger.info(f'New user {user.telegram} with chat_id {chat_id} is added to the chat bot and greeted')
 
+
 @shared_task
 def send_daily_reminders():
     """

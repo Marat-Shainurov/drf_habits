@@ -17,7 +17,6 @@ class HabitTestCase(APITestCase):
         data = {"name": "New habit", "action_time": "22:00:00",
                 "action_place": "Home", "duration": "PT2M", "user": self.user.pk}
         response = self.client.post(reverse('habits:habits_create'), data=data)
-
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(
             response.json()['name'], "New habit")
@@ -28,9 +27,7 @@ class HabitTestCase(APITestCase):
         data = {"name": "New habit", "action_time": "22:00:00",
                 "action_place": "Home", "duration": "PT2M"}
         self.client.post(reverse('habits:habits_create'), data=data)
-
         response = self.client.get(reverse('habits:habits_list'))
-
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(Habit.objects.all().count(), 1)
         self.assertEquals(
@@ -44,9 +41,7 @@ class HabitTestCase(APITestCase):
         habit = Habit.objects.create(**data)
         new_data = {"name": "UPDATED habit", "action_time": "22:00:00",
                     "action_place": "Home", "duration": "PT2M"}
-
         response = self.client.put(reverse('habits:habits_update', kwargs={"pk": habit.pk}), data=new_data)
-
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(
             response.json()['name'],
@@ -58,9 +53,7 @@ class HabitTestCase(APITestCase):
                 "action_place": "Home", "duration": "PT2M", "user": self.user}
         habit = Habit.objects.create(**data)
         new_data = {"name": "UPDATED habit"}
-
         response = self.client.patch(reverse('habits:habits_update', kwargs={"pk": habit.pk}), data=new_data)
-
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(
             response.json()['name'],
@@ -71,9 +64,7 @@ class HabitTestCase(APITestCase):
         data = {"name": "New habit", "action_time": "22:00:00",
                 "action_place": "Home", "duration": "PT2M", "user": self.user}
         habit = Habit.objects.create(**data)
-
         response = self.client.get(reverse('habits:habits_detail', kwargs={"pk": habit.pk}))
-
         self.assertEquals(response.status_code, status.HTTP_200_OK)
         self.assertEquals(
             response.json(),
@@ -87,8 +78,6 @@ class HabitTestCase(APITestCase):
         data = {"name": "New habit", "action_time": "22:00:00",
                 "action_place": "Home", "duration": "PT2M", "user": self.user}
         habit = Habit.objects.create(**data)
-
         response = self.client.delete(reverse('habits:habits_delete', kwargs={"pk": habit.pk}))
-
         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEquals(Habit.objects.all().count(), 0)

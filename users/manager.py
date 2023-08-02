@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import UserManager as OldUserManager
 
@@ -9,9 +8,6 @@ class UserManager(OldUserManager):
         Create and save a user with the given username, email, and password.
         """
         email = self.normalize_email(email)
-        GlobalUserModel = apps.get_model(
-            self.model._meta.app_label, self.model._meta.object_name
-        )
         user = self.model(email=email, **extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
@@ -30,6 +26,4 @@ class UserManager(OldUserManager):
             raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
-
         return self._create_user(email, password, **extra_fields)
-

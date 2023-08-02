@@ -5,7 +5,8 @@ from habits.models import Habit, AuxiliaryHabit, Reward
 
 @admin.register(Habit)
 class HabitAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',)
+    list_display = (
+        'pk', 'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',)
 
 
 @admin.register(AuxiliaryHabit)

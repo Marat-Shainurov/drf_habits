@@ -22,7 +22,8 @@ urlpatterns = [
 
     # auxiliary habits
     path('habits/auxiliary-habits/', AuxiliaryHabitListAPIView.as_view(), name='auxiliary_habits_list'),
-    path('habits/auxiliary-habits/detail/<int:pk>/', AuxiliaryHabitRetrieveAPIView.as_view(), name='auxiliary_habits_detail'),
+    path('habits/auxiliary-habits/detail/<int:pk>/', AuxiliaryHabitRetrieveAPIView.as_view(),
+         name='auxiliary_habits_detail'),
     path('habits/auxiliary-habits/create/', AuxiliaryHabitCreateAPIView.as_view(),
                        name='auxiliary_habits_create'),
     path('habits/auxiliary-habits/update/<int:pk>/', AuxiliaryHabitUpdateAPIView.as_view(),

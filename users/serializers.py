@@ -18,6 +18,7 @@ class CustomUserDetailSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ('id', 'email', 'phone', 'telegram', 'avatar', 'last_login', 'user_habits')
 
+
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser

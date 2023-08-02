@@ -174,6 +174,6 @@ CELERY_BEAT_SCHEDULE = {
     },
     'Send reminders': {
         'task': 'habits.tasks.send_daily_reminders',
-        'schedule': crontab(hour='11', minute='5'),
+        'schedule': crontab(hour='19', minute='0'),
     },
 }

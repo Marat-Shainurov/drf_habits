@@ -9,12 +9,69 @@ from habits.serializers import AuxiliaryHabitSerializer, AuxiliaryHabitCreateSer
 
 
 class AuxiliaryHabitCreateAPIView(generics.CreateAPIView):
+    """
+    Example of the endpoint: http://127.0.0.1:8000/habits/auxiliary-habits/create/
+
+    Creates the AuxiliaryHabit model's objects.
+    serializer_class - AuxiliaryHabitCreateSerializer.
+    permission_classes - IsAuthenticated.
+
+    Params:
+    name - required, str
+    main_habit - required, int (the FK field of the main_habit. related_name - 'auxiliary_habit').
+    action - nullable, str
+    action_time - nullable, TimeField (e.g., '18:00:00')
+    action_place - nullable, str
+    duration - nullable, ISO 8601 (max 2 minutes for a new habit - 'PT2M' in ISO 8601)
+    is_public - nullable, boolean, False by default
+
+    Response example:
+        {
+        "id": 5,
+        "name": "new",
+        "action": null,
+        "action_time": null,
+        "action_place": null,
+        "duration": null,
+        "is_public": false,
+        "main_habit": 1
+    }
+    """
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitCreateSerializer
     permission_classes = [IsAuthenticated]
 
 
 class AuxiliaryHabitListAPIView(generics.ListAPIView):
+    """
+    Example of the endpoint: http://127.0.0.1:8000/habits/auxiliary-habits/
+
+    Returns a paginated list of the AuxiliaryHabit model's objects.
+    Pagination params - 5 objects per page, max_page_size - 50, page_size_query_param - 'page_size'.
+    Returns all the main_habit object's request.user instances (both is_public=True and is_public=False),
+    and is_public=True for other users' of main_habit objects.
+    serializer_class - AuxiliaryHabitSerializer.
+    permission_classes - IsAuthenticated.
+
+    Response example:
+        {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+            {
+                "id": 1,
+                "main_habit": 1,
+                "name": "Have a candy",
+                "action": "Enjoy a candy after a daily morning exercise",
+                "action_time": "09:15:00",
+                "action_place": "Home",
+                "duration": null,
+                "is_public": true
+            }
+        ]
+    }
+    """
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitSerializer
     pagination_class = HabitListPagination
@@ -27,18 +84,65 @@ class AuxiliaryHabitListAPIView(generics.ListAPIView):
 
 
 class AuxiliaryHabitRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Example of the endpoint: http://127.0.0.1:8000/habits/auxiliary-habits/detail/<int:pk>/
+
+    Returns the AuxiliaryHabit model's object.
+    serializer_class - AuxiliaryHabitSerializer.
+    permission_classes - IsAuthenticated, IsMainHabitOwner.
+
+    Response example:
+        {
+        "id": 5,
+        "main_habit": 1,
+        "name": "new nabit",
+        "action": null,
+        "action_time": null,
+        "action_place": null,
+        "duration": null,
+        "is_public": false
+    }
+
+    """
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitSerializer
     permission_classes = [IsAuthenticated, IsMainHabitOwner]
 
 
 class AuxiliaryHabitUpdateAPIView(generics.UpdateAPIView):
+    """
+    Example of the endpoint: http://127.0.0.1:8000/habits/auxiliary-habits/update/<int:pk>/
+
+    Updates the AuxiliaryHabit model's object.
+    serializer_class - AuxiliaryHabitSerializer.
+    permission_classes - IsAuthenticated, IsMainHabitOwner.
+
+    Response example:
+        {
+        "id": 5,
+        "main_habit": 1,
+        "name": "new updated",
+        "action": null,
+        "action_time": null,
+        "action_place": null,
+        "duration": null,
+        "is_public": false
+    }
+    """
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitSerializer
     permission_classes = [IsAuthenticated, IsMainHabitOwner]
 
 
 class AuxiliaryHabitDeleteAPIView(generics.DestroyAPIView):
+    """
+    Example of the endpoint: http://127.0.0.1:8000/habits/auxiliary-habits/delete/<int:pk>/
+
+
+    Deletes the AuxiliaryHabit model's object.
+    serializer_class - AuxiliaryHabitSerializer.
+    permission_classes - IsAuthenticated, IsMainHabitOwner.
+    """
     queryset = AuxiliaryHabit.objects.all()
     serializer_class = AuxiliaryHabitSerializer
     permission_classes = [IsAuthenticated, IsMainHabitOwner]

@@ -9,6 +9,13 @@ from habits.serializers.reward_serializers import RewardCreateSerializer
 
 
 class RewardViewSet(viewsets.ModelViewSet):
+    """
+    A ViewSet for the Reward model.
+    Serializers - RewardSerializer, RewardCreateSerializer, RewardShortSerializer.
+    Pagination params - 3 objects per page, max_page_size - 10, page_size_query_param - 'page_size'.
+    Permissions - IsAuthenticated, IsMainHabitOwner for 'retrieve', 'update', 'partial_update', 'destroy' methods.
+        IsAuthenticated for the rest of the methods.
+    """
     default_serializer = RewardSerializer
     queryset = Reward.objects.all()
     serializers = {

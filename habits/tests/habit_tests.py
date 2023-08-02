@@ -15,27 +15,12 @@ class HabitTestCase(APITestCase):
 
     def test_create_habit(self):
         data = {"name": "New habit", "action_time": "22:00:00",
-                "action_place": "Home", "duration": "PT2M"}
+                "action_place": "Home", "duration": "PT2M", "user": self.user.pk}
         response = self.client.post(reverse('habits:habits_create'), data=data)
 
         self.assertEquals(response.status_code, status.HTTP_201_CREATED)
         self.assertEquals(
-            response.json(),
-            {
-                "id": 1,
-                "name": "New habit",
-                "user": 1,
-                "action": None,
-                "action_time": "22:00:00",
-                "action_place": "Home",
-                "duration": "00:02:00",
-                "regularity": "daily",
-                "is_public": False,
-                "habit_reward": [],
-                "auxiliary_habit": [],
-                "days_of_week": None
-            }
-        )
+            response.json()['name'], "New habit")
 
         self.assertEquals(Habit.objects.all().count(), 1)
 

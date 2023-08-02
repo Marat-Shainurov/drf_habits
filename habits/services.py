@@ -16,7 +16,11 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 file_handler.setFormatter(formatter)
 
 
-def get_user_chat_id(telegram_username):
+def get_user_chat_id(telegram_username: str) -> None | str:
+    """
+    Returns the user's telegram chat_id.
+    Takes the user's telegram_username(@username) as the argument.
+    """
     api_url = f"https://api.telegram.org/bot{settings.TELEGRAM_API_TOKEN}/getUpdates"
     response = requests.get(api_url)
     data = response.json()
@@ -30,13 +34,20 @@ def get_user_chat_id(telegram_username):
         return None
 
 
-def set_chat_id_to_user(chat_id, telegram_username):
+def set_chat_id_to_user(chat_id: str, telegram_username: str) -> None:
+    """
+    Sets the CustomUser model object's chat_id field.
+    """
     user = CustomUser.objects.get(telegram=telegram_username)
     user.chat_id = chat_id
     user.save()
 
 
-def send_habits_reminder(chat_id):
+def send_habits_reminder(chat_id: str) -> None:
+    """
+    Sends reminders obout tomorrow's activities to a user via the Telegram's API.
+    Takes the user's chat_id as the argument.
+    """
     token = settings.TELEGRAM_API_TOKEN
     user = CustomUser.objects.get(chat_id=chat_id)
 
@@ -51,7 +62,11 @@ def send_habits_reminder(chat_id):
     logger.info(f"Status Code: {req.status_code}, Response Text: {req.text}")
 
 
-def send_greetings(chat_id):
+def send_greetings(chat_id: str) -> None:
+    """
+    Sends the welcome greetings to joined users via the Telegram's API.
+    Takes the user's chat_id as the argument.
+    """
     token = settings.TELEGRAM_API_TOKEN
     user = CustomUser.objects.get(chat_id=chat_id)
 
@@ -66,9 +81,13 @@ def send_greetings(chat_id):
 
     logger.info(f"Joined user: {user.telegram}, Status Code: {req.status_code}, Response Text: {req.text}")
 
-def output_coming_activities(chat_id):
-    now_dow = datetime.datetime.now().isoweekday()
 
+def output_coming_activities(chat_id: str) -> str:
+    """
+    Returns a formatted string of a user's tomorrow's activities.
+    Takes the user's chat_id as the argument.
+    """
+    now_dow = datetime.datetime.now().isoweekday()
     user = get_object_or_404(CustomUser, chat_id=chat_id)
     user_habits = Habit.objects.filter(user=user)
 

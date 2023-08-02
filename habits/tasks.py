@@ -6,6 +6,10 @@ from users.models import CustomUser
 
 @shared_task
 def getUpdate_bot():
+    """
+    Gets update of the HabitBot bot subscribers via the Telegram API (get_user_chat_id() function),
+    Sets the users' chat_id field's value (if a new subscriber is found (set_chat_id_to_user() function)).
+    """
     users = CustomUser.objects.filter(is_active=True, chat_id__isnull=True)
 
     if users:
@@ -19,8 +23,11 @@ def getUpdate_bot():
 
 @shared_task
 def send_daily_reminders():
+    """
+    Sends daily reminders about the users tomorrow's activities, if the users are active and have chat_id__isnull=False.
+    """
     users = CustomUser.objects.filter(is_active=True, chat_id__isnull=False)
-    logger.info(f'users - {users}')
+    logger.info(f'Filtered users to process - {users}')
 
     if users:
         for user in users:

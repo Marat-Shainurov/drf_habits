@@ -17,9 +17,17 @@ class RewardCreateSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         habit = validated_data.get('main_habit')
+        if not habit:
+            raise ValidationError(
+                {"result":
+                     "For a separate Reward object creation you have to specify the 'main_habit' filed value. "
+                     "Please pass the 'main_habit pk' there."
+                 }
+            )
         if habit.auxiliary_habit.all().exists():
             raise ValidationError({
-                "result": 'This habit already has an auxiliary habit! You can assign either a reward or an auxiliary habit'})
+                "result": 'This habit already has an auxiliary habit! '
+                          'You can assign either a reward or an auxiliary habit'})
         return super().create(validated_data)
 
 

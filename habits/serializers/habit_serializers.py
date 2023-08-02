@@ -31,7 +31,6 @@ class HabitSerializer(serializers.ModelSerializer):
 
 
 class HabitCreateSerializer(serializers.ModelSerializer):
-
     habit_reward = RewardCreateSerializer(many=True, required=False)
     auxiliary_habit = AuxiliaryHabitCreateSerializer(many=True, required=False)
     days_of_week = serializers.ListField(required=False)
@@ -39,8 +38,8 @@ class HabitCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habit
         fields = (
-        'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public', 'habit_reward',
-        'auxiliary_habit', 'days_of_week')
+            'id', 'name', 'user', 'action', 'action_time', 'action_place', 'duration', 'regularity', 'is_public',
+            'habit_reward', 'auxiliary_habit', 'days_of_week')
         validators = [IsTooLong(field='duration')]
 
     def create(self, validated_data):

@@ -21,7 +21,6 @@ class RewardCreateSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 {"result":
                      "For a separate Reward object creation you have to specify the 'main_habit' filed value. "
-                     "Please pass the 'main_habit pk' there."
                  }
             )
         if habit.auxiliary_habit.all().exists():

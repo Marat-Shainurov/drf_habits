@@ -9,6 +9,7 @@ class IsOwner(permissions.BasePermission):
             return True
         return False
 
+
 class IsMainHabitOwner(permissions.BasePermission):
     message = 'You are not the main habit\'s owner!'
 

@@ -20,8 +20,7 @@ class AuxiliaryHabitCreateSerializer(serializers.ModelSerializer):
         if not habit:
             raise ValidationError(
                 {"result":
-                     "For a separate AuxiliaryHabit object creation you have to specify the 'main_habit' filed value. "
-                     "Please pass the 'main_habit pk' there."
+                     "For a separate AuxiliaryHabit object creation you have to specify the 'main_habit' filed value."
                  }
             )
         if habit.habit_reward.all().exists():

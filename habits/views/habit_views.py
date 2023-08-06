@@ -31,7 +31,6 @@ class HabitCreateAPIView(generics.CreateAPIView):
             (see the http://127.0.0.1:8000/habits/auxiliary-habits/create/ endpoint for more details)
         habit_reward - a Reward model object can be created
             (see the (see the http://127.0.0.1:8000/habits/rewards/ endpoint for more details) endpoint)
-
     """
     serializer_class = HabitCreateSerializer
     permission_classes = [IsAuthenticated]
@@ -45,13 +44,11 @@ class HabitCreateAPIView(generics.CreateAPIView):
 class HabitListAPIView(generics.ListAPIView):
     """
     Endpoint: http://127.0.0.1:8000/habits/
-
     - Returns a paginated list of the Habit model's objects.
     - Pagination params - 5 objects per page, max_page_size - 50, page_size_query_param - 'page_size'.
     - Returns all the request.user's instances (both is_public=True and is_public=False) and is_public=True for other users' objects.
     - serializer_class - HabitSerializer.
     - permission_classes - IsAuthenticated.
-
     """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
@@ -67,11 +64,9 @@ class HabitListAPIView(generics.ListAPIView):
 class HabitRetrieveAPIView(generics.RetrieveAPIView):
     """
     Endpoint: http://127.0.0.1:8000/habits/detail/<int:pk>/
-
     - Returns the Habit model's object.
     - serializer_class - HabitSerializer.
     - permission_classes - IsAuthenticated, IsOwner
-
     """
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer

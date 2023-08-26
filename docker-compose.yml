@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: drf_habits
     ports:
       - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
@@ -21,7 +23,7 @@ services:
       - db
       - redis
     volumes:
-      - .:/app
+      - ./.env:/app/.env
 
   redis:
     image: redis:7.0.2-alpine
@@ -30,17 +32,29 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - ./data/cache:/data
+      - redis_data:/data
 
   celery:
     build: .
     container_name: celery_app
-    command: >
-      bash celery -A config worker -l INFO --loglevel warning
+    command: celery -A config worker -l INFO --loglevel warning
     volumes:
-      - .:/app
-    links:
-      - redis
+      - celery_data:/app
     depends_on:
       - redis
 
+  celery-beat:
+    build: .
+    container_name: celery_beat_app
+    command: celery -A config beat -l info -S django --loglevel warning
+    volumes:
+      - celery_beat_data:/app
+    depends_on:
+      - redis
+      - celery
+
+volumes:
+  postgres_data:
+  redis_data:
+  celery_beat_data:
+  celery_data:

@@ -12,12 +12,26 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata
     ports:
-      - '54321:5432'
+      - '5432:5432'
+
+  redis:
+    image: redis:7.0.2-alpine
+    container_name: redis_app
+    command: redis-server --save 20 1 --loglevel warning
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   app:
     build: .
     container_name: app_container
-    command: python manage.py runserver 0.0.0.0:8000
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
     depends_on:
@@ -26,15 +40,6 @@ services:
     volumes:
       - ./.env:/app/.env
 
-  redis:
-    image: redis:7.0.2-alpine
-    container_name: redis_app
-    command: redis-server --save 20 1 --loglevel warning
-    ports:
-      - '63791:6379'
-    volumes:
-      - redis_data:/data
-
   celery:
     build: .
     container_name: celery_app
@@ -42,7 +47,16 @@ services:
     volumes:
       - celery_data:/app
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_LOG_LEVEL=debug
+    healthcheck:
+      test: [ "CMD", "celery", "inspect", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   celery-beat:
     build: .
@@ -51,11 +65,17 @@ services:
     volumes:
       - celery_beat_data:/app
     depends_on:
-      - redis
-      - celery
+      redis:
+        condition: service_healthy
+      celery:
+        condition: service_healthy
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_LOG_LEVEL=debug
 
 volumes:
   postgres_data:
   redis_data:
-  celery_beat_data:
   celery_data:
+  celery_beat_data:
+

@@ -32,6 +32,6 @@ Subscribe to  HabitBot:
   about tomorrow's habits to be executed.
 
 # Testing
-- All the endpoints are covered by pytest tests in <app_name>/test.py \
+- All the habits endpoints are covered by pytest tests in habits/tests
 - Run tests:\
   docker-compose exec app python manage.py test

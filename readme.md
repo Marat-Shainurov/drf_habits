@@ -1,65 +1,32 @@
-# drf_habits project
+# General Description
+drf_habits is a django-rest-framework project.
+The project is created for working on the users personal efficiency and good habits.
 
-# Описание проекта
-drf_habits это django-rest-framework проект.
-Проект создан для работы над персональной эффективностью пользователей, для работы над полезными привычками.
+# Install and usage
+1. Clone the project from https://github.com/Marat-Shainurov/drf_habits to your local machine.
+2. Build a new image and run the project container from the root project directory:
+    - docker-compose build
+    - docker-compose up
+3. Read the project's documentation (swagger or redoc format):
+    - http://127.0.0.1:8000/swagger/
+    - http://127.0.0.1:8000/redoc/
+4. Go to the main page on your browser http://127.0.0.1:8000/ and start working with the app's endpoints.
 
-# Запуск проекта
-1. Установить docker, выбрав соответствующую ОС.
-   https://docs.docker.com/get-docker/
+# Apps and models
+1. habits - habits model.
+   Habit - main habit model. Each habit can have either an auxiliary habit or a reward (to support a main habit execution).
+   AuxiliaryHabit - additional/extra habit model (to support the main one).
+   Reward - reword model (for a main habit execution).
+2. users - users model.
+   CustomUser - customized users model.
+   UersManager class is overridden and customized as well (drf_habits/users/manager.py)
 
-2. Клонировать в IDE проект https://github.com/Marat-Shainurov/drf_habits.git на вашу локальную машину.
-
-3. Запустить процесс создания и запуска образа приложения, с помощью команд:
-   - docker-compose build
-   - docker-compose up
-
-4. Изучить документацию проекта (swagger или redoc):
-   - http://127.0.0.1:8000/swagger/
-   - http://127.0.0.1:8000/redoc/
-
-5. Открыть в браузере главную страницу проекта http://127.0.0.1:8000/ , и начать работу с эндпоинтами.
-
-
-# Приложения и модели
-1. habits.
-   Habit - основная привычка.
-   AuxiliaryHabit - вспомогательная привычка.
-   Reward - вознаграждение за выполнение основной привычки.
-2. users.
-   CustomUser - кастомная модель пользователей.
-   Переопределен и кастомизирован также и UersManager класс (drf_habits/users/manager.py)
-
-# Валидация
-- Для основной привычки может быть создана либо вспомогательная привычка (auxiliary_habit), 
-  либо вознаграждение (habit_reward). Валидация на уровне сериализаторов.
-- Вознаграждение может быть присвоено только для основной привычки. Валидация на уровне моделей.
-- Время выполнения новой привычки должно быть не больше 120 секунд. Валидация через кастомный валидатор.
-- Нельзя выполнять привычку реже, чем 1 раз в 7 дней. Валидация на уровне поля модели и доступного выбора.
-
-# Пагинация
-Для вывода списка привычек реализована пагинацию с выводом по 5 привычек на страницу.
-Для вывода списка вознаграждений реализована пагинацию с выводом по 3 вознаграждений на страницу.
-
-# Права доступа
-Каждый пользователь имеет доступ только к своим привычкам по механизму CRUD.
-Пользователь может видеть список публичных привычек без возможности их как-то редактировать или удалять.
-Кастомные permissions - IsOwner, IsMainHabitOwner.
-
-# Эндпоинты и документация
-Настроена документация yasg-drf.
-Все эндпоинты можно изучить по ссылкам:
-http://localhost:8000/redoc/
-http://localhost:8000/swagger/
-
-# Интеграции
-Создана интеграция с API Telegram, для рассылок напоминаний.
-Периодические задачи getUpdate_bot и send_daily_reminders настроены в setting.py и ./habits/tasks.py.
-Подписаться на уведомления от чата HabitBot:
-- найти в Telegram bot @ms_habits_bot
-- нажать /start'. 
-  В течении 5-10 секунд придет приветственное сообщение.
-  Далее, ежедневно, в 19.00 пользователь будет получать напоминания о завтрашних привычках к исполнению.
-
-# Безопасность
-Для проекта настроен CORS, чтобы фронтенд мог подключаться к проекту на развернутом сервере.
+# Integration with Telegram
+Integration with Telegram is created for communication with the application's users over the Telegram chatbot ('HabitBot').
+Periodic tasks getUpdate_bot and send_daily_reminders are set in setting.py and ./habits/tasks.py.
+Subscribe to  HabitBot:
+- find the Telegram chatbot (@ms_habits_bot)
+- click /start' \
+  A greeting message will be sent within 5 seconds.\
+  After that, the subscribed user will receive daily reminders at 19.00
+  about tomorrow's habits to be executed.

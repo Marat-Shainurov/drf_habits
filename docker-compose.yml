@@ -30,7 +30,7 @@ services:
 
   app:
     build: .
-    container_name: app_container
+    container_name: app_habits_container
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - '8000:8000'
@@ -43,7 +43,7 @@ services:
   celery:
     build: .
     container_name: celery_app
-    command: celery -A config worker -l INFO --loglevel warning
+    command: celery -A config worker -l INFO
     volumes:
       - celery_data:/app
     depends_on:
@@ -61,7 +61,7 @@ services:
   celery-beat:
     build: .
     container_name: celery_beat_app
-    command: celery -A config beat -l info -S django --loglevel warning
+    command: celery -A config beat -l info -S django
     volumes:
       - celery_beat_data:/app
     depends_on:

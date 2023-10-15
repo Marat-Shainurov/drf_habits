@@ -22,7 +22,7 @@ class CustomUserDetailSerializer(serializers.ModelSerializer):
 class CustomUserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = ('email', 'telegram', 'phone', 'avatar',)
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

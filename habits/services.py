@@ -71,8 +71,8 @@ def send_greetings(chat_id: str) -> None:
     user = CustomUser.objects.get(chat_id=chat_id)
 
     message = f'{user.telegram}, \nHello and welcome!' \
-              f'\nNow the work on your good habits will be even more effective!' \
-              f'\nWe will send you daily friendly reminders about your next day activities.' \
+              f'\nNow working on your good habits will be even more effective!' \
+              f'\nWe will send you our daily friendly reminders about your next day activities.' \
               f'\nGood luck!'
 
     req = requests.post(

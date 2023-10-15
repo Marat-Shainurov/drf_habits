@@ -30,3 +30,8 @@ Subscribe to  HabitBot:
   A greeting message will be sent within 5 seconds.\
   After that, the subscribed user will receive daily reminders at 19.00
   about tomorrow's habits to be executed.
+
+# Testing
+- All the endpoints are covered by pytest tests in <app_name>/test.py \
+- Run tests:\
+  docker-compose exec app python manage.py test

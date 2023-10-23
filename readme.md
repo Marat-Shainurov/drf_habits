@@ -1,6 +1,7 @@
 # General Description
 drf_habits is a django-rest-framework project.
 The project is created for working on the users personal efficiency and good habits.
+Main stack: Djangorestframework, Postgresql, Redis, Celery, django-celery-beat, requests and Telegram API.
 
 # Install and usage
 1. Clone the project from https://github.com/Marat-Shainurov/drf_habits to your local machine.
@@ -28,8 +29,7 @@ Subscribe to  HabitBot:
 - find the Telegram chatbot (@ms_habits_bot)
 - click /start' \
   A greeting message will be sent within 5 seconds.\
-  After that, the subscribed user will receive daily reminders at 19.00
-  about tomorrow's habits to be executed.
+  After that, the subscribed user will receive daily reminders at 19.00 about tomorrow's habits to be executed.
 
 # Testing
 - All the habits endpoints are covered by pytest tests in habits/tests
